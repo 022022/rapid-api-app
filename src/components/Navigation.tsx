@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function Navigation(){
   return <>
-    <NavLink to='/'> Search for exercise </NavLink>
+    <NavLink to='/' className={'md:text-xs'}> Search for exercise </NavLink>
   </>
 }
 

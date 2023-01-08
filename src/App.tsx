@@ -7,14 +7,16 @@ import NotFound from './pages/NotFound';
 function App() {
 	return (
 		<>
-			<div className='md:container md:mx-auto bg-gray-800'>
+			<div className='md:container md:mx-auto bg-gray-100  flex flex-col items-center gap-3.5'>
 				<Navigation />
-			</div>
-			<Routes>
-				<Route path='/' element={<Main />} />
-				<Route path='/exercise/:id' element={<Exercise />} />
-				<Route path='*' element={<NotFound />} />
-			</Routes>
+
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/exercise/:id' element={<Exercise />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+
+      </div>
 		</>
 	);
 }
