@@ -1,6 +1,4 @@
-async function fetchSearchData(searchTerm: string){
-  const url = `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${searchTerm}`;
-
+async function fetchSearchData(url: string){
   const key = process.env.REACT_APP_RAPID_API_KEY;
 
   if(!key) throw new Error('API key missing')

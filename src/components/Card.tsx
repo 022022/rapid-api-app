@@ -1,9 +1,9 @@
-import React from 'react';
 import { Exercise } from '../types/types';
+import { Link } from 'react-router-dom';
 
 
 function Card({data}: {data: Exercise} ){
-  return <>{data.type} </>
+  return <Link to={`/exercise/${data.name}`}> {data.type} </Link>
 }
 
 export default Card;

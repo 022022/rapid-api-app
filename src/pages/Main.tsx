@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import Card from '../components/Card';
 import fetchSearchData from '../services/fetchSearchData';
+import { Exercise } from '../types/types';
 
 function Main(){
 
@@ -9,8 +10,9 @@ function Main(){
 
   const [searchResults, setSearchResults] = useState([]);
 
+
   const search = async () => {
-    const data = await fetchSearchData(searchTerm);
+    const data = await fetchSearchData(`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${searchTerm}`);
     setSearchResults(data);
     console.log(data);
   }
@@ -29,7 +31,8 @@ function Main(){
       Search
     </button>
 
-    { searchResults.map((item) => <Card data={item} key={nanoid()}></Card>) }
+    { searchResults.map((item: Exercise) => <Card data={item} key={nanoid()}></Card>) }
+
   </>
 }
 

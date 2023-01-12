@@ -41,3 +41,15 @@ export interface Exercise {
   name: string,
   type: ExerciseType
 }
+
+export interface ExerciseVideo {
+  items: videoItem[],
+}
+
+export interface videoItem {
+  snippet: Snippet,
+}
+
+export interface Snippet {
+  description: string,
+}
