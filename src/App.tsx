@@ -9,10 +9,7 @@ function App() {
 
 	return (
 		<>
-			<div className='md:container md:mx-auto bg-gray-100  flex flex-col items-center gap-3.5'>
-				<Navigation />
-
-
+			<div className='md:container md:mx-auto flex flex-col items-center'>
           <Routes>
             <Route path='/' element={<Main />} />
             <Route path='/exercise/:name' element={<ExerciseDetails />} />
