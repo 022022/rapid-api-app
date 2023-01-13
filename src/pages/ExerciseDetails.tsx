@@ -14,44 +14,49 @@ import { Exercise, ExerciseVideo } from '../types/types';
 function ExerciseDetails() {
 	const [currentExercise, setCurrentExercise] = useState<Exercise>();
 	const [exerciseVideos, setExerciseVideos] = useState<ExerciseVideo>();
-	const [sameEquip, setSameEquip] = useState<Exercise[]>([]);
+	const [sameType, setSameType] = useState<Exercise[]>([]);
 	const [sameMuscle, setSameMuscle] = useState<Exercise[]>([]);
 
 	const { name } = useParams();
 
-  const maxAdditionalCards = 4;
+  const maxAdditionalCards = 3;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [name]);
 
 	useEffect(() => {
+
 		async function fetchData() {
 			const searchResult = await fetchSearchData(
 				`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${name}`
 			);
-			const current = await searchResult.find((item: Exercise) => item.name === name);
 
-			setCurrentExercise(current);
-			console.log('current', current);
+      const current = await searchResult.find((item: Exercise) => item.name === name);
 
-			//const videosData = await fetchVideoData(name);
-			//setExerciseVideos(videosData);
-			//console.log(videosData);
+      setCurrentExercise(current);
+      console.log('current', current);
 
-			const sameMuscleResult = await fetchSearchData(
-				`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=${current.muscle}`
-			);
-      const sameMuscle = await sameMuscleResult.filter((item: Exercise, index: number) => index < maxAdditionalCards);
-			setSameMuscle(sameMuscle);
-			console.log('sameMuscle', sameMuscle);
 
-			const sameEquipResult = await fetchSearchData(
-				`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=${current.muscle}`
-			);
-      const sameEquip = await sameEquipResult.filter((item: Exercise, index: number) => index < maxAdditionalCards);
-			setSameEquip(sameEquip);
-			console.log('sameEquip', sameEquip);
+
+      //const videosData = await fetchVideoData(name);
+      //setExerciseVideos(videosData);
+      //console.log(videosData);
+
+      const sameMuscleResult = await fetchSearchData(
+        `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=${current.muscle}`
+      );
+      const sameMuscle = await sameMuscleResult.filter((item: Exercise, index: number) => item.name !== current.name && index <= maxAdditionalCards);
+      setSameMuscle(sameMuscle);
+      console.log('sameMuscle', sameMuscle);
+
+      const sameTypeResult = await fetchSearchData(
+        `https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?type=${current.type}`
+      );
+      const sameType = await sameTypeResult.filter((item: Exercise, index: number) => item.name !== current.name && index <= maxAdditionalCards);
+      setSameType(sameType);
+      console.log('sameType', sameType);
+
 		}
 
 		fetchData();
@@ -72,9 +77,9 @@ function ExerciseDetails() {
 				))}
 			</div>
 
-			<h2> More {currentExercise?.equipment} exercises</h2>
+			<h2> More {currentExercise?.type} exercises</h2>
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max'>
-				{sameEquip.map((item) => (
+				{sameType.map((item) => (
 					<Card data={item} key={nanoid()}></Card>
 				))}
 			</div>

@@ -1,9 +1,11 @@
+import axios from 'axios';
+
 async function fetchSearchData(url: string){
   const key = process.env.REACT_APP_RAPID_API_KEY;
 
   if(!key) throw new Error('API key missing')
 
-  const options = {
+  const config = {
     method: 'GET',
     headers: {
       'X-RapidAPI-Key': key,
@@ -11,10 +13,13 @@ async function fetchSearchData(url: string){
     }
   };
 
-  const response = await fetch(url, options);
-  const data = await response.json();
+  try {
+    const data = await axios.get(url, config);
+    return await data.data;
+  } catch (error) {
+    console.log(error);
+  }
 
-  return data;
 }
 
 export default fetchSearchData;
