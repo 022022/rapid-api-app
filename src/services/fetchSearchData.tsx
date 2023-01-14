@@ -14,10 +14,11 @@ async function fetchSearchData(url: string){
   };
 
   try {
-    const data = await axios.get(url, config);
-    return await data.data;
+    const response = await axios.get(url, config);
+    const data = await response.data;
+    return {status: true, data: data};
   } catch (error) {
-    console.log(error);
+    return {status: false, data: []};
   }
 
 }

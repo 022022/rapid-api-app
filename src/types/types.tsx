@@ -42,14 +42,25 @@ export interface Exercise {
   type: ExerciseType
 }
 
-export interface ExerciseVideo {
-  items: videoItem[],
+export interface ExerciseVideos {
+  items: VideoItem[],
 }
 
-export interface videoItem {
+export interface VideoItem {
   snippet: Snippet,
+  id: VideoItemID
 }
 
-export interface Snippet {
+interface VideoItemID {
+  videoId: string;
+}
+
+interface Snippet {
+  title: string,
+  thumbnails: Thumbnails;
   description: string,
+}
+
+interface Thumbnails {
+  high: {url: string},
 }

@@ -7,14 +7,26 @@ import { Exercise } from '../types/types';
 function Main(){
 
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [errorMessage, setErrorMessage] = useState('');
+  const [nothingFound, setNothingFound] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
 
   const search = async () => {
+    setErrorMessage('');
+    setNothingFound('');
+
     const data = await fetchSearchData(`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${searchTerm}`);
-    setSearchResults(data);
-    console.log(data);
+    if(!data.status){
+      setErrorMessage('An error has occurred, we are working on it. Please try again later')
+    } else {
+      if(!data.data.length){
+        setNothingFound('Sorry, nothing found');
+      } else {
+        setSearchResults(data.data);
+      }
+      console.log(data);
+    }
   }
 
   return <main className='prose flex flex-col items-center gap-3.5 px-3.5 py-12 text-center'>
@@ -31,10 +43,14 @@ function Main(){
       Search
     </button>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max" >
-      { searchResults.map((item: Exercise) => <Card data={item} key={nanoid()}></Card>) }
-    </div>
+    {errorMessage && <p>{errorMessage}</p>}
+    {nothingFound && <p>{nothingFound}</p>}
 
+    { (!errorMessage && !nothingFound) &&
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max" >
+        {searchResults.map((item: Exercise) => <Card data={item} key={nanoid()}></Card>)}
+      </div>
+    }
 
   </main>
 }
