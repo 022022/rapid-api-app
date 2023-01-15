@@ -44,8 +44,6 @@ function ExerciseDetails() {
 					(item: Exercise) => item.name === name
 				);
 
-				setCurrentExercise(current);
-
 				const videosData = await fetchVideoData(name);
 				setExerciseVideos(videosData);
 				console.log(videosData);
@@ -67,6 +65,8 @@ function ExerciseDetails() {
 						item.name !== current.name && index < maxAdditionalCards
 				);
 				setSameType(sameType);
+
+        setCurrentExercise(current);
 			}
 
 			setLoading(false);

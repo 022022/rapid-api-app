@@ -5,7 +5,7 @@ import fetchSearchData from '../services/fetchSearchData';
 import { Exercise } from '../types/types';
 
 function Main(){
-
+	const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [nothingFound, setNothingFound] = useState('');
@@ -13,6 +13,7 @@ function Main(){
 
 
   const search = async () => {
+    setLoading(true);
     setErrorMessage('');
     setNothingFound('');
 
@@ -27,6 +28,7 @@ function Main(){
       }
       console.log(data);
     }
+    setLoading(false);
   }
 
   return <main className='prose flex flex-col items-center gap-3.5 px-3.5 py-12 text-center'>
@@ -43,10 +45,12 @@ function Main(){
       Search
     </button>
 
+    {loading && <div className='lds-dual-ring'></div>}
+
     {errorMessage && <p>{errorMessage}</p>}
     {nothingFound && <p>{nothingFound}</p>}
 
-    { (!errorMessage && !nothingFound) &&
+    { (!errorMessage && !nothingFound && !loading) &&
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max" >
         {searchResults.map((item: Exercise) => <Card data={item} key={nanoid()}></Card>)}
       </div>
