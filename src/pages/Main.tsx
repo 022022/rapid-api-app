@@ -4,9 +4,8 @@ import Card from '../components/Card';
 import fetchSearchData from '../services/fetchSearchData';
 import { Exercise } from '../types/types';
 
-function Main(){
+function Main({setSearchTerm, searchTerm}: {setSearchTerm: (item: string)=>void,  searchTerm: string}){
 	const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [nothingFound, setNothingFound] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -34,7 +33,10 @@ function Main(){
   return <main className='prose flex flex-col items-center gap-3.5 px-3.5 py-12 text-center'>
 
     <h1>Search exercises</h1>
-    <p >Search for exercise name or body part (like "sit-up" or "leg")</p>
+    <p >Search for exercise name or body part (like <button className='link link-accent'
+        onClick={() => setSearchTerm('sit-up')}>sit-up</button> or <button className='link link-accent'
+        onClick={() => setSearchTerm('barbell')}>barbell</button>
+    )</p>
 
     <input type="text"
       placeholder="Start here"

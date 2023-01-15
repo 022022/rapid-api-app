@@ -1,16 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import ExerciseDetails from './pages/ExerciseDetails';
-
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 
 function App() {
-
+  const [searchTerm, setSearchTerm] = useState('');
 	return (
 		<>
 			<div className='md:container md:mx-auto flex flex-col items-center'>
           <Routes>
-            <Route path='/' element={<Main />} />
+            <Route path='/' element={<Main setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>} />
             <Route path='/exercise/:name' element={<ExerciseDetails />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
