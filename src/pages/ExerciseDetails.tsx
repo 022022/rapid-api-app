@@ -9,13 +9,13 @@ import Navigation from '../components/Navigation';
 import Video from '../components/Video';
 import fetchSearchData from '../services/fetchSearchData';
 import fetchVideoData from '../services/fetchVideoData';
-import { Exercise, ExerciseVideos, VideoItem } from '../types/types';
+import { Exercise, VideoItem } from '../types/types';
 
 function ExerciseDetails() {
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [currentExercise, setCurrentExercise] = useState<Exercise>();
-	const [exerciseVideos, setExerciseVideos] = useState<ExerciseVideos>();
+	const [exerciseVideos, setExerciseVideos] = useState<VideoItem[]>([]);
 	const [sameType, setSameType] = useState<Exercise[]>([]);
 	const [sameMuscle, setSameMuscle] = useState<Exercise[]>([]);
 
@@ -31,9 +31,7 @@ function ExerciseDetails() {
 		async function fetchData() {
 			setLoading(true);
 
-			const searchResult = await fetchSearchData(
-				`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${name}`
-			);
+			const searchResult = await fetchSearchData({name: name});
 
 			if (!searchResult.status || !searchResult.data.length) {
 				setErrorMessage(
@@ -48,18 +46,14 @@ function ExerciseDetails() {
 				setExerciseVideos(videosData);
 				console.log(videosData);
 
-				const sameMuscleResult = await fetchSearchData(
-					`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=${current.muscle}`
-				);
+				const sameMuscleResult = await fetchSearchData({muscle: current.muscle});
 				const sameMuscle = await sameMuscleResult.data.filter(
 					(item: Exercise, index: number) =>
 						item.name !== current.name && index < maxAdditionalCards
 				);
 				setSameMuscle(sameMuscle);
 
-				const sameTypeResult = await fetchSearchData(
-					`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?type=${current.type}`
-				);
+				const sameTypeResult = await fetchSearchData({type: current.type});
 				const sameType = await sameTypeResult.data.filter(
 					(item: Exercise, index: number) =>
 						item.name !== current.name && index < maxAdditionalCards
@@ -89,22 +83,21 @@ function ExerciseDetails() {
 						<>
 							<Detail
 								currentExercise={currentExercise}
-								heros={[
-									exerciseVideos?.items[0].snippet.thumbnails
-										.high.url,
-									exerciseVideos?.items[1].snippet.thumbnails
-										.high.url,
-								]}
+                heros={exerciseVideos.length ?
+                  [exerciseVideos[0].snippet.thumbnails.high.url,
+                  exerciseVideos[1].snippet.thumbnails.high.url]
+                  : []
+                  }
 							></Detail>
 
-							{exerciseVideos && (
+							{exerciseVideos?.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl my-3'>
 										How to do it
 									</h2>
 
 									<div className='flex flex-wrap gap-8 justify-center'>
-										{exerciseVideos?.items.map(
+										{exerciseVideos?.map(
 											(videoItem: VideoItem) => (
 												<Video
 													videoItem={videoItem}
@@ -114,9 +107,9 @@ function ExerciseDetails() {
 										)}
 									</div>
 								</>
-							)}
+							) : null}
 
-							{sameMuscle.length && (
+							{sameMuscle.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
 										More {currentExercise?.muscle} exercises
@@ -131,9 +124,9 @@ function ExerciseDetails() {
 										))}
 									</div>
 								</>
-							)}
+							) : null}
 
-							{sameType.length && (
+							{sameType.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
 										{' '}
@@ -149,7 +142,7 @@ function ExerciseDetails() {
 										))}
 									</div>
 								</>
-							)}
+							) : null}
 						</>
 					)}
 				</main>

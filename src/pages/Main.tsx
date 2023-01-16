@@ -16,7 +16,8 @@ function Main({setSearchTerm, searchTerm}: {setSearchTerm: (item: string)=>void,
     setErrorMessage('');
     setNothingFound('');
 
-    const data = await fetchSearchData(`https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?name=${searchTerm}`);
+    const data = await fetchSearchData({name: searchTerm});
+
     if(!data.status){
       setErrorMessage('An error has occurred, we are working on it. Please try again later')
     } else {

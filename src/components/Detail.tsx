@@ -15,10 +15,12 @@ function Detail({currentExercise, heros}: {currentExercise: Exercise | undefined
     </div>
       <h1>{ currentExercise?.name}</h1>
 
+      { heros.length ?
         <div className='flex xs:gap-0 sm:gap-4 flex-wrap '>
           { heros[0] && <img className="w-60" alt={currentExercise?.name} src={heros[0]}/> }
           { heros[1] && <img className="w-60" alt={currentExercise?.name} src={heros[1]}/> }
         </div>
+      : null}
 
       { message ||
       <ul>
