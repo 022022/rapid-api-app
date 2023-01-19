@@ -11,7 +11,7 @@ import fetchSearchData from '../services/fetchSearchData';
 import fetchVideoData from '../services/fetchVideoData';
 import { Exercise, VideoItem } from '../types/types';
 
-function ExerciseDetails() {
+function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: Exercise[]) => void, myExercises: Exercise[] }) {
 	const [loading, setLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [currentExercise, setCurrentExercise] = useState<Exercise>();
@@ -69,6 +69,12 @@ function ExerciseDetails() {
 		fetchData();
 	}, [name]);
 
+  function addToSaved(){
+    if(currentExercise){
+      setMyExercises([...myExercises, currentExercise]);
+    }
+  }
+
 	return (
 		<>
 			{loading ? (
@@ -89,6 +95,9 @@ function ExerciseDetails() {
                   : []
                   }
 							></Detail>
+
+<button className="link link-secondary" onClick={addToSaved}>Add this exercise to MyExercises</button>
+
 
 							{exerciseVideos?.length ? (
 								<>
