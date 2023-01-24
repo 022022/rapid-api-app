@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ExerciseType, Muscle } from '../types/types';
 
 const exercisesApiRequest = axios.create({
   baseURL: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises',
@@ -17,7 +18,7 @@ exercisesApiRequest.interceptors.request.use(
     return request;
   });
 
-async function fetchSearchData(params: {name?: string, muscle?: string, type?: string}){
+async function fetchSearchData(params: {[key: string]: string | Muscle | ExerciseType}){
   const config = {params: params};
 
   try {

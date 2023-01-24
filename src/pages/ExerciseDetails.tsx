@@ -1,25 +1,23 @@
 import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
-import { useState } from 'react';
 import { useParams } from 'react-router';
 
 import Card from '../components/Card';
 import Detail from '../components/Detail';
 import Navigation from '../components/Navigation';
 import Video from '../components/Video';
-import fetchSearchData from '../services/fetchSearchData';
-import fetchVideoData from '../services/fetchVideoData';
 import { Exercise, VideoItem } from '../types/types';
 
-function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: Exercise[]) => void, myExercises: Exercise[] }) {
-	const [loading, setLoading] = useState(true);
-	const [errorMessage, setErrorMessage] = useState('');
-	const [currentExercise, setCurrentExercise] = useState<Exercise>();
-	const [exerciseVideos, setExerciseVideos] = useState<VideoItem[]>([]);
-	const [sameType, setSameType] = useState<Exercise[]>([]);
-	const [sameMuscle, setSameMuscle] = useState<Exercise[]>([]);
+import { useAppSelector } from '../services/store/preTypedHooks';
+import { useAppDispatch } from '../services/store/preTypedHooks';
+import { fetchExerciseDetailsData } from '../services/store/exercisesSlice';
 
-	const { name } = useParams();
+function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: Exercise[]) => void, myExercises: Exercise[] }) {
+  const state = useAppSelector((state) => state.exerciseDetails);
+  const dispatch = useAppDispatch();
+  const { loading, errorMessage } = useAppSelector((state) => state.exerciseDetails);
+
+  const { name } = useParams();
 
 	const maxAdditionalCards = 3;
 
@@ -28,51 +26,16 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 	}, [name]);
 
 	useEffect(() => {
-		async function fetchData() {
-			setLoading(true);
-
-			const searchResult = await fetchSearchData({name: name});
-
-			if (!searchResult.status || !searchResult.data.length) {
-				setErrorMessage(
-					'An error has occurred, we are working on it. Please try again later'
-				);
-			} else {
-				const current = await searchResult.data.find(
-					(item: Exercise) => item.name === name
-				);
-
-				const videosData = await fetchVideoData(name);
-				setExerciseVideos(videosData);
-				console.log(videosData);
-
-				const sameMuscleResult = await fetchSearchData({muscle: current.muscle});
-				const sameMuscle = await sameMuscleResult.data.filter(
-					(item: Exercise, index: number) =>
-						item.name !== current.name && index < maxAdditionalCards
-				);
-				setSameMuscle(sameMuscle);
-
-				const sameTypeResult = await fetchSearchData({type: current.type});
-				const sameType = await sameTypeResult.data.filter(
-					(item: Exercise, index: number) =>
-						item.name !== current.name && index < maxAdditionalCards
-				);
-				setSameType(sameType);
-
-        setCurrentExercise(current);
-			}
-
-			setLoading(false);
-		}
-
-		fetchData();
-	}, [name]);
+    if(name){
+      dispatch(fetchExerciseDetailsData({name: name}));
+    }
+	}, [name, dispatch]);
 
   function addToSaved(){
-    if(currentExercise){
-      setMyExercises([...myExercises, currentExercise]);
+    if(state.currentExercise){
+      setMyExercises([...myExercises, state.currentExercise]);
     }
+    console.log(...myExercises)
   }
 
 	return (
@@ -87,26 +50,19 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
 					{!errorMessage && (
 						<>
-							<Detail
-								currentExercise={currentExercise}
-                heros={exerciseVideos.length ?
-                  [exerciseVideos[0].snippet.thumbnails.high.url,
-                  exerciseVideos[1].snippet.thumbnails.high.url]
-                  : []
-                  }
-							></Detail>
+							<Detail></Detail>
 
 <button className="link link-secondary" onClick={addToSaved}>Add this exercise to MyExercises</button>
 
 
-							{exerciseVideos?.length ? (
+							{state.exerciseVideos?.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl my-3'>
 										How to do it
 									</h2>
 
 									<div className='flex flex-wrap gap-8 justify-center'>
-										{exerciseVideos?.map(
+										{state.exerciseVideos?.map(
 											(videoItem: VideoItem) => (
 												<Video
 													videoItem={videoItem}
@@ -118,15 +74,16 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 								</>
 							) : null}
 
-							{sameMuscle.length ? (
+							{state.sameMuscle.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
-										More {currentExercise?.muscle} exercises
+										More {state.currentExercise?.muscle} exercises
 									</h2>
 
 									<div className='flex flex-wrap gap-8 justify-center'>
-										{sameMuscle.map((item) => (
-											<Card
+										{state.sameMuscle.map((item, index) => (
+                      index <= maxAdditionalCards &&
+                        <Card
 												data={item}
 												key={nanoid()}
 											></Card>
@@ -135,15 +92,16 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 								</>
 							) : null}
 
-							{sameType.length ? (
+							{state.sameType.length ? (
 								<>
 									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
 										{' '}
-										More {currentExercise?.type} exercises
+										More {state.currentExercise?.type} exercises
 									</h2>
 
 									<div className='flex flex-wrap gap-8 justify-center'>
-										{sameType.map((item) => (
+										{state.sameType.map((item, index) => (
+                      index <= maxAdditionalCards &&
 											<Card
 												data={item}
 												key={nanoid()}

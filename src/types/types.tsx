@@ -4,7 +4,7 @@ enum Difficulty {
   expert
 }
 
-enum Muscle {
+export enum Muscle {
   abdominals,
   abductors,
   adductors,
@@ -23,7 +23,7 @@ enum Muscle {
   triceps,
 }
 
-enum ExerciseType {
+export enum ExerciseType {
   cardio,
   olympic_weightlifting,
   plyometrics,
