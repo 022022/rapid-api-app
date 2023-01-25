@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { ExerciseSearchSlice } from './exerciseSearchSlice';
 import { ExerciseDetailsSlice } from './exercisesSlice';
 
 export const store = configureStore({
   reducer: {
     exerciseDetails : ExerciseDetailsSlice.reducer,
+    exercisesSearch : ExerciseSearchSlice.reducer,
   }
 })
 
