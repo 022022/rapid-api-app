@@ -47,36 +47,47 @@ export const ExerciseDetailsSlice = createSlice({
 });
 
 export const fetchExerciseDetailsData = createAsyncThunk<
-    {status: boolean, current: Exercise, sameMuscle: Exercise[], sameType: Exercise[], videosData: VideoItem[]},
+    {status: boolean, current: Exercise | null, sameMuscle: Exercise[], sameType: Exercise[], videosData: VideoItem[]},
     {name: string}
     >(
   'exerciseDetails/fetchData',
 
   async ({name}) => {
-    const mainExercise = await fetchSearchData({name});
-    const current: Exercise = await mainExercise.data.find((item: Exercise) => item.name === name);
+    try{
+      const mainExercise = await fetchSearchData({name});
+      const current: Exercise = await mainExercise.data.find((item: Exercise) => item.name === name);
 
-    const muscle = current.muscle;
-    const type = current.type;
+      const muscle = current.muscle;
+      const type = current.type;
 
-    const sameMuscleResult = await fetchSearchData({muscle});
-    const sameMuscle = await sameMuscleResult.data.filter(
-      (item: Exercise) =>
-        item.name !== current.name);
+      const sameMuscleResult = await fetchSearchData({muscle});
+      const sameMuscle = await sameMuscleResult.data.filter(
+        (item: Exercise) =>
+          item.name !== current.name);
 
-		const sameTypeResult = await fetchSearchData({type});
-		const sameType = await sameTypeResult.data.filter(
-			(item: Exercise) =>
-				item.name !== current.name);
+      const sameTypeResult = await fetchSearchData({type});
+      const sameType = await sameTypeResult.data.filter(
+        (item: Exercise) =>
+          item.name !== current.name);
 
-    const videosData = await fetchVideoData(name);
+      const videosData = await fetchVideoData(name);
 
-    return {
-      status: mainExercise.status,
-      current: current,
-      sameMuscle: sameMuscle,
-      sameType: sameType,
-      videosData: videosData
+      return {
+        status: mainExercise.status,
+        current: current,
+        sameMuscle: sameMuscle,
+        sameType: sameType,
+        videosData: videosData
+      }
+    } catch {
+        return {
+          status: false,
+          current: null,
+          sameMuscle: [],
+          sameType: [],
+          videosData: []
+        }
     }
+
   }
 );

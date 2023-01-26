@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import ExerciseDetails from './pages/ExerciseDetails';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';

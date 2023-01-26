@@ -34,7 +34,7 @@ function Main(){
 
     { loading && <div className='lds-dual-ring'></div> }
 
-    { state.searchResults && !state.searchResults.length ? <p>Sorry, nothing found</p> : null }
+    { !errorMessage && state.searchResults && !state.searchResults.length ? <p>Sorry, nothing found</p> : null }
 
     { state.searchResults && state.searchResults.length ?
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max" >
