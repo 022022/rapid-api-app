@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 
 import Card from '../components/Card';
 import Detail from '../components/Detail';
-import Navigation from '../components/Navigation';
 import Video from '../components/Video';
 import { Exercise, VideoItem } from '../types/types';
 
@@ -44,7 +43,7 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 				<div className='lds-dual-ring'></div>
 			) : (
 				<main className='flex flex-col gap-4 px-3.5 py-12 items-center w-full'>
-					<Navigation />
+
 
 					{errorMessage && <p>{errorMessage}</p>}
 
