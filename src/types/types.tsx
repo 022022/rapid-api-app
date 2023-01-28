@@ -64,3 +64,7 @@ interface Snippet {
 interface Thumbnails {
   high: {url: string},
 }
+
+export interface SavedExercise extends Exercise{
+  images: string[],
+}

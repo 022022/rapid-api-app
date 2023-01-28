@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Exercise } from '../../types/types';
+import { SavedExercise } from '../../types/types';
 
 function useLocalStorage(
     key: string,
-    initialValue?: Exercise[]
+    initialValue?: SavedExercise[]
   ): [
-    Exercise[], (item: Exercise[]) => void
+    SavedExercise[], (item: SavedExercise[]) => void
   ] {
-    
+
 	const [state, setState] = useState(() => {
 		if (!initialValue) {
       initialValue = [];

@@ -5,13 +5,13 @@ import { useParams } from 'react-router';
 import Card from '../components/Card';
 import Detail from '../components/Detail';
 import Video from '../components/Video';
-import { Exercise, VideoItem } from '../types/types';
+import { SavedExercise, VideoItem } from '../types/types';
 
 import { useAppSelector } from '../services/store/preTypedHooks';
 import { useAppDispatch } from '../services/store/preTypedHooks';
 import { fetchExerciseDetailsData } from '../services/store/exercisesSlice';
 
-function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: Exercise[]) => void, myExercises: Exercise[] }) {
+function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: SavedExercise[]) => void, myExercises: SavedExercise[] }) {
   const state = useAppSelector((state) => state.exerciseDetails);
   const dispatch = useAppDispatch();
   const { loading, errorMessage } = useAppSelector((state) => state.exerciseDetails);
@@ -32,7 +32,12 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
   function addToSaved(){
     if(state.currentExercise){
-      setMyExercises([...myExercises, state.currentExercise]);
+      const images = [
+          state.exerciseVideos[0].snippet.thumbnails.high.url,
+          state.exerciseVideos[1].snippet.thumbnails.high.url
+        ];
+      const savedExercise: SavedExercise = {...state.currentExercise, images: images};
+      setMyExercises([...myExercises, savedExercise]);
     }
     console.log(...myExercises)
   }
