@@ -17,7 +17,7 @@ function Video({videoItem}: {videoItem: VideoItem}){
     <h2 className="card-title pt-1">{title}</h2>
     <figure><img src={videoItem.snippet.thumbnails.high.url} alt={videoItem.snippet.title}/></figure>
     <div className="card-actions h-full  content-end">
-      <a className="link link-accent" href={link}>Watch on Youtube</a>
+      <a className="link link-neutral-content " href={link}>Watch on Youtube</a>
     </div>
   </div>
 </div>

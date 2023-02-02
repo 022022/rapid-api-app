@@ -4,10 +4,10 @@ import { SavedExercise } from '../types/types';
 function SavedExerciseCard( {data}: {data: SavedExercise} ){
   return <>
 
-  <div className='collapse collapse-arrow border-b'>
+  <div className='group collapse collapse-arrow border-b hover:border-primary'>
 				<input type='checkbox' />
-				<div className='collapse-title text-xl font-medium'>
-          <h2 className='card-title'>{data.name} </h2>
+				<div className='collapse-title text-xl font-medium group-hover:text-primary'>
+          <h2 className='card-title m-0 group-hover:text-primary'>{data.name} </h2>
 				</div>
 				<div className='collapse-content'>
 

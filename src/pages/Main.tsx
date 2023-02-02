@@ -15,18 +15,18 @@ function Main(){
 
   return <main className='prose flex flex-col items-center gap-3.5 px-3.5 py-12 text-center'>
 
-    <h1>Search exercises</h1>
-    <p>Search for exercise name or body part (like <button className='link link-accent'
-        onClick={() => dispatch(setSearchTerm('sit-up'))}>sit-up</button> or <button className='link link-accent'
+    <h1>Search Exercises</h1>
+    <p className='mt-0'>Search for exercise name or body part (like <button className='link link-primary'
+        onClick={() => dispatch(setSearchTerm('sit-up'))}>sit-up</button> or <button className='link link-primary'
         onClick={() => dispatch(setSearchTerm('barbell'))}>barbell</button>
     )</p>
 
     <input type="text"
       placeholder="Start here"
-      className="input input-bordered input-accent w-full max-w-xs"
+      className="input input-bordered input-primary w-full max-w-xs"
       value={state.searchTerm}
       onChange={(e) => dispatch(setSearchTerm(e.target.value.toLowerCase()))}/>
-    <button onClick={search} className="btn btn-accent">
+    <button onClick={search} className="btn btn-primary mb-10">
       Search
     </button>
 
@@ -38,7 +38,7 @@ function Main(){
 
     { state.searchResults && state.searchResults.length ?
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-max" >
-      {state.searchResults.map((item: Exercise) => <Card data={item} key={nanoid()}></Card>)}
+      {state.searchResults.map((item: Exercise, index: number) => index < 9 && <Card data={item} key={nanoid()}></Card>)}
       </div>
      : null
     }

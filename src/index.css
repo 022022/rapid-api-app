@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.active {
+  color: white;
+  background-color: #4e4e4e;
+}
 
 .lds-dual-ring {
   display: flex;
   width: 80px;
   height: 80px;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .lds-dual-ring:after {
@@ -18,7 +22,7 @@
   margin: 8px;
   border-radius: 50%;
   border: 6px solid #fff;
-  border-color: #51a800 transparent #fff transparent;
+  border-color: rgb(242, 140, 24) transparent #fff transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {

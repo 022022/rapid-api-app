@@ -56,12 +56,12 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 						<>
 							<Detail></Detail>
 
-<button className="link link-secondary" onClick={addToSaved}>Add this exercise to MyExercises</button>
+<button className="link link-primary" onClick={addToSaved}>Add this exercise to MyExercises</button>
 
 
 							{state.exerciseVideos?.length ? (
 								<>
-									<h2 className='font-medium leading-tight text-3xl my-3'>
+									<h2 className='font-medium leading-tight text-3xl my-3 mt-10'>
 										How to do it
 									</h2>
 
@@ -80,7 +80,7 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
 							{state.sameMuscle.length ? (
 								<>
-									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
+									<h2 className='font-medium leading-tight text-3xl mt-10 mb-5 '>
 										More {state.currentExercise?.muscle} exercises
 									</h2>
 
@@ -98,7 +98,7 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
 							{state.sameType.length ? (
 								<>
-									<h2 className='font-medium leading-tight text-3xl mt-8 mb-5'>
+									<h2 className='font-medium leading-tight text-3xl mt-10 mb-5 '>
 										{' '}
 										More {state.currentExercise?.type} exercises
 									</h2>
