@@ -21,7 +21,7 @@ youtubeApiRequest.interceptors.request.use(
 )
 
 async function fetchVideoData(searchTerm?: string){
-  const searchTermSport = searchTerm + ' exercise';
+  const searchTermSport = searchTerm + ' exercise how to';
 
   const config = {params: {q: searchTermSport}};
 

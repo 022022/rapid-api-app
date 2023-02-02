@@ -1,7 +1,12 @@
 import { nanoid } from 'nanoid';
 import { SavedExercise } from '../types/types';
 
-function SavedExerciseCard( {data}: {data: SavedExercise} ){
+function SavedExerciseCard( {data, setMyExercises, myExercises}: {data: SavedExercise, setMyExercises: (item: SavedExercise[]) => void, myExercises: SavedExercise[] } ){
+  function deleteFromSaved(){
+    const newMyExercises = myExercises.filter((item) => item.instructions !== data.instructions);
+    setMyExercises(newMyExercises)
+  }
+
   return <>
 
   <div className='group collapse collapse-arrow border-b hover:border-primary'>
@@ -11,6 +16,7 @@ function SavedExerciseCard( {data}: {data: SavedExercise} ){
 				</div>
 				<div className='collapse-content'>
 
+        {data.images &&
             <div className='flex xs:gap-0 sm:gap-4 flex-wrap px-5 sm:px-0'>
               <img
                 className='w-60'
@@ -23,7 +29,7 @@ function SavedExerciseCard( {data}: {data: SavedExercise} ){
                 src={data.images[1]}
               />
             </div>
-
+          }
           <div className='card-body'>
             <div className='card-actions justify-start h-full content-end'>
               <div className='badge badge-outline'>
@@ -40,7 +46,9 @@ function SavedExerciseCard( {data}: {data: SavedExercise} ){
                   .map((item) => <li key={nanoid()}>{item}</li>)}
             </ul>
           </div>
+          <button className='link' onClick={deleteFromSaved}>Remove from Saved Exercises</button>
 				</div>
+
 			</div>
   </>
 }

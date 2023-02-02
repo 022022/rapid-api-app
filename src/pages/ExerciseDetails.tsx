@@ -13,6 +13,7 @@ import { fetchExerciseDetailsData } from '../services/store/exercisesSlice';
 
 function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: SavedExercise[]) => void, myExercises: SavedExercise[] }) {
   const state = useAppSelector((state) => state.exerciseDetails);
+
   const dispatch = useAppDispatch();
   const { loading, errorMessage } = useAppSelector((state) => state.exerciseDetails);
 
@@ -32,14 +33,19 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
   function addToSaved(){
     if(state.currentExercise){
-      const images = [
+      let images;
+      if(state.exerciseVideos?.length){
+        images = [
           state.exerciseVideos[0].snippet.thumbnails.high.url,
           state.exerciseVideos[1].snippet.thumbnails.high.url
         ];
+      } else {
+        images = null;
+      }
+
       const savedExercise: SavedExercise = {...state.currentExercise, images: images};
       setMyExercises([...myExercises, savedExercise]);
     }
-    console.log(...myExercises)
   }
 
 	return (
@@ -52,11 +58,10 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 
 					{errorMessage && <p>{errorMessage}</p>}
 
-					{!errorMessage && (
+					{!errorMessage &&  state.currentExercise && (
 						<>
 							<Detail></Detail>
-
-<button className="link link-primary" onClick={addToSaved}>Add this exercise to MyExercises</button>
+              <button className="link link-primary" onClick={addToSaved}>Add this exercise to MyExercises</button>
 
 
 							{state.exerciseVideos?.length ? (

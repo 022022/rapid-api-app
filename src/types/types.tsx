@@ -66,5 +66,5 @@ interface Thumbnails {
 }
 
 export interface SavedExercise extends Exercise{
-  images: string[],
+  images: string[] | null,
 }

@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Main />} />
             <Route path='/exercise/:name' element={<ExerciseDetails setMyExercises={setMyExercises} myExercises={myExercises} />} />
-            <Route path='/saved' element={<SavedExercises />} />
+            <Route path='/saved' element={<SavedExercises setMyExercises={setMyExercises} myExercises={myExercises}/>} />
             <Route path='*' element={<NotFound />} />
           </Routes>
 
