@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import ExerciseDetails from './pages/ExerciseDetails';
-import Main from './pages/Main';
+import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound';
 import SavedExercises from './pages/SavedExercises';
 import useLocalStorage from './services/hooks/useLocalStorage';

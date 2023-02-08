@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid';
-import Card from '../components/Card';
-import { Exercise } from '../types/types';
-import { useAppDispatch, useAppSelector } from '../services/store/preTypedHooks';
-import { fetchExerciseSearchData, setSearchTerm } from '../services/store/exerciseSearchSlice';
+import Card from '../../components/Card';
+import { Exercise } from '../../types/types';
+import { useAppDispatch, useAppSelector } from '../../services/store/preTypedHooks';
+import { fetchExerciseSearchData, setSearchTerm } from '../../services/store/exerciseSearchSlice';
 
 function Main(){
   const state = useAppSelector((state) => state.exercisesSearch);
