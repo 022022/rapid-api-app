@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import ExerciseDetails from './pages/ExerciseDetails';
+import ExerciseDetails from './pages/ExerciseDetails/ExerciseDetails';
 import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound';
 import SavedExercises from './pages/SavedExercises';

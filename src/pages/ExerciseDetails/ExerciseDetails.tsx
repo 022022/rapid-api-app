@@ -2,14 +2,14 @@ import { nanoid } from 'nanoid';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
-import Card from '../components/Card';
-import Detail from '../components/Detail';
-import Video from '../components/Video';
-import { SavedExercise, VideoItem } from '../types/types';
+import Card from '../../components/Card';
+import Detail from '../../components/Detail';
+import Video from '../../components/Video';
+import { SavedExercise, VideoItem } from '../../types/types';
 
-import { useAppSelector } from '../services/store/preTypedHooks';
-import { useAppDispatch } from '../services/store/preTypedHooks';
-import { fetchExerciseDetailsData } from '../services/store/exercisesSlice';
+import { useAppSelector } from '../../services/store/preTypedHooks';
+import { useAppDispatch } from '../../services/store/preTypedHooks';
+import { fetchExerciseDetailsData } from '../../services/store/exercisesSlice';
 
 function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item: SavedExercise[]) => void, myExercises: SavedExercise[] }) {
   const state = useAppSelector((state) => state.exerciseDetails);
