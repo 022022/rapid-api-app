@@ -7,7 +7,3 @@ export const server = setupServer(
     return res(ctx.status(200), ctx.json({status: false, data: []}), ctx.delay(150));
   })
 );
-
-beforeAll(() => server.listen());
-afterAll(() => server.close());
-afterEach(() => server.resetHandlers());
