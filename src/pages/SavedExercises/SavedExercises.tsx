@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
-import SavedExerciseCard from '../components/SavedExerciseCard';
-import { SavedExercise } from '../types/types';
+import SavedExerciseCard from '../../components/SavedExerciseCard';
+import { SavedExercise } from '../../types/types';
 
 function SavedExercises( {setMyExercises, myExercises}: { setMyExercises: (item: SavedExercise[]) => void, myExercises: SavedExercise[] } ){
   if(!myExercises.length){

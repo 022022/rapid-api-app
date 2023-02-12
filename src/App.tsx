@@ -3,7 +3,7 @@ import Navigation from './components/Navigation';
 import ExerciseDetails from './pages/ExerciseDetails/ExerciseDetails';
 import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound/NotFound';
-import SavedExercises from './pages/SavedExercises';
+import SavedExercises from './pages/SavedExercises/SavedExercises';
 import useLocalStorage from './services/hooks/useLocalStorage';
 
 function App() {
