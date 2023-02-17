@@ -32,7 +32,7 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 	}, [name, dispatch]);
 
   function addToSaved(){
-    if(state.currentExercise){
+    if(state.currentExercise && !myExercises.find((item) => item.instructions ===  state.currentExercise?.instructions)){
       let images;
       if(state.exerciseVideos?.length){
         images = [
@@ -44,6 +44,7 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
       }
 
       const savedExercise: SavedExercise = {...state.currentExercise, images: images};
+
       setMyExercises([...myExercises, savedExercise]);
     }
   }
@@ -61,8 +62,10 @@ function ExerciseDetails( {setMyExercises, myExercises}: { setMyExercises: (item
 					{!errorMessage &&  state.currentExercise && (
 						<>
 							<Detail></Detail>
-              <button className="link link-primary" onClick={addToSaved}>Add this exercise to MyExercises</button>
-
+              { myExercises.find((item) => item.instructions ===  state.currentExercise?.instructions) ?
+                <p>This Exercise is in Saved Exercises</p>
+                : <button className="link link-primary" onClick={addToSaved}>Add this exercise to Saved Exercises</button>
+              }
 
 							{state.exerciseVideos?.length ? (
 								<>

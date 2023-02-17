@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { useAppSelector } from '../services/store/preTypedHooks';
+import { beatifyString } from '../utils/stringUtils';
 
 function Detail(){
   const state = useAppSelector((state) => state.exerciseDetails);
@@ -11,7 +12,7 @@ function Detail(){
     <>
       <div className="flex flex-wrap gap-4 h-full content-end py-12">
           <div className="badge badge-outline">{state.currentExercise?.difficulty}</div>
-          <div className="badge badge-outline">{state.currentExercise?.equipment}</div>
+          <div className="badge badge-outline">{beatifyString(state.currentExercise?.equipment)}</div>
           <div className="badge badge-outline">{state.currentExercise?.muscle}</div>
           <div className="badge badge-outline">{state.currentExercise?.type}</div>
       </div>
