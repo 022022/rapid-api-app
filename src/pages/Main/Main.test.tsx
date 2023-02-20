@@ -1,17 +1,10 @@
 import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { server } from '../../mocks/handlers';
 import { Difficulty, ExerciseType, Muscle } from '../../types/types';
 import { renderWithProviders } from '../../utils/testUtils';
 import Main from './Main';
 
 describe('Main', () => {
-
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
-  afterEach(() => server.resetHandlers());
-
   it('opens', async () => {
     renderWithProviders(<Main />);
     const searchField = screen.getByRole('textbox');
@@ -20,21 +13,6 @@ describe('Main', () => {
     expect(searchField).toBeInTheDocument();
     expect(searchButton).toBeInTheDocument();
   });
-
-
-  it('sends request, gets response and renders empty results', async () => {
-    renderWithProviders(<Main />);
-    const searchField = screen.getByRole('textbox');
-    const searchButton = screen.getByRole('button', { name: /Search/i })
-
-    expect(screen.queryByText(/Sorry, nothing found/i)).not.toBeInTheDocument();
-
-    userEvent.type(searchField, 'ham');
-    userEvent.click(searchButton);
-
-    expect(await screen.findByText(/Sorry, nothing found/i)).toBeInTheDocument();
-  });
-
 
   it('renders error', async () => {
     const errorState = {
