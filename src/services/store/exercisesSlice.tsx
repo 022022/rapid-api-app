@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Exercise, VideoItem } from '../../types/types';
-import fetchSearchData from '../fetchSearchData';
-import fetchVideoData from '../fetchVideoData';
 
 interface ExerciseDetailsState {
 	loading: boolean;
@@ -54,30 +52,36 @@ export const fetchExerciseDetailsData = createAsyncThunk<
 
   async ({name}) => {
     try{
-      const mainExercise = await fetchSearchData({name});
+      const exercise = await fetch(`/.netlify/functions/vfetchExerciseApi?name=${name}`);
+      const mainExercise = await exercise.json();
       const current: Exercise = await mainExercise.data.find((item: Exercise) => item.name === name);
 
       const muscle = current.muscle;
       const type = current.type;
 
-      const sameMuscleResult = await fetchSearchData({muscle});
+      const sameMuscleResponse = await fetch(`/.netlify/functions/vfetchExerciseApi?muscle=${muscle}`);
+      const sameMuscleResult = await sameMuscleResponse.json();
+
       const sameMuscle = await sameMuscleResult.data.filter(
         (item: Exercise) =>
           item.name !== current.name);
 
-      const sameTypeResult = await fetchSearchData({type});
+      const sameTypeResponse = await fetch(`/.netlify/functions/vfetchExerciseApi?type=${type}`);
+      const sameTypeResult = await sameTypeResponse.json();
+
       const sameType = await sameTypeResult.data.filter(
         (item: Exercise) =>
           item.name !== current.name);
 
-      const videosData = await fetchVideoData(name);
+      const videos = await fetch(`/.netlify/functions/vfetchVideos?name=${name}`);
+      const videosData = await videos.json();
 
       return {
         status: mainExercise.status,
         current: current,
         sameMuscle: sameMuscle,
         sameType: sameType,
-        videosData: videosData
+        videosData: videosData.data
       }
     } catch {
         return {

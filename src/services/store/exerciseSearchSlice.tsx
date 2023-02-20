@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Exercise} from '../../types/types';
-import fetchSearchData from '../fetchSearchData';
 
 interface ExerciseSearchState {
   searchTerm: string;
@@ -47,16 +46,20 @@ export const fetchExerciseSearchData = createAsyncThunk
   (
   'exerciseSearch/fetchData',
   async ({name}) => {
-    const data = await fetchSearchData({name});
+    const exercisesResponse = await fetch(`/.netlify/functions/vfetchExerciseApi?name=${name}`);
+    const exercises = await exercisesResponse.json();
+    const data = await exercises.data;
+    const status = await exercises.status;
+
     let errorMessage = '';
 
-    if(!data.status){
+    if(!status){
       errorMessage = 'An error has occurred, we are working on it. Please try again later';
     }
 
     return {
       errorMessage: errorMessage,
-      searchResults: data.data,
+      searchResults: data,
     }
   }
 )
