@@ -25,7 +25,6 @@ export const handler: Handler = async (event, context) => {
   if(event.queryStringParameters?.type) params = {type : event.queryStringParameters?.type}
 
   const config = {params: params};
-  console.log(config);
 
   try {
     const response = await exercisesApiRequest.request(config);
@@ -38,7 +37,6 @@ export const handler: Handler = async (event, context) => {
       }),
     }
   } catch (error) {
-    console.log(error);
     return {
       statusCode: 404,
       body: JSON.stringify({
