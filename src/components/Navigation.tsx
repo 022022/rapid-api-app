@@ -5,7 +5,7 @@ function Navigation(){
   <div className='navbar bg-base-100 border-b border-slate-600' >
 	<div className='navbar'>
 		<div className='dropdown'>
-			<label tabIndex={0} className='btn btn-ghost md:hidden'>
+			<div tabIndex={0} className='btn btn-ghost md:hidden'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-5 w-5'
@@ -18,7 +18,7 @@ function Navigation(){
 						strokeWidth='2'
 						d='M4 6h16M4 12h8m-8 6h16'/>
 				</svg>
-			</label>
+			</div>
 			<ul
 				tabIndex={0}
 				className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 gap-6'
